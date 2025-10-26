@@ -1,0 +1,101 @@
+id_producto,nombre_producto,categoria,precio_unitario
+1,Coca Cola 1.5L,OTROS,2347
+2,Pepsi 1.5L,OTROS,4973
+3,Sprite 1.5L,ALIMENTOS,4964
+4,Fanta Naranja 1.5L,OTROS,2033
+5,Agua Mineral 500ml,BEBIDAS,4777
+6,Jugo de Naranja 1L,BEBIDAS,4170
+7,Jugo de Manzana 1L,BEBIDAS,3269
+8,Energética Nitro 500ml,OTROS,4218
+9,Yerba Mate Suave 1kg,ALIMENTOS,3878
+10,Yerba Mate Intensa 1kg,ALIMENTOS,4883
+11,Café Molido 250g,ALIMENTOS,2053
+12,Té Negro 20 saquitos,ALIMENTOS,570
+13,Té Verde 20 saquitos,ALIMENTOS,2383
+14,Leche Entera 1L,LÁCTEOS,1723
+15,Leche Descremada 1L,LÁCTEOS,2538
+16,Yogur Natural 200g,LÁCTEOS,4613
+17,Queso Cremoso 500g,LÁCTEOS,4834
+18,Queso Rallado 150g,LÁCTEOS,3444
+19,Manteca 200g,ALIMENTOS,3251
+20,Pan Lactal Blanco,PANIFICADOS,1571
+21,Pan Lactal Integral,PANIFICADOS,272
+22,Medialunas de Manteca,PANIFICADOS,2069
+23,Bizcochos Salados,GRANOS Y CEREALES,2380
+24,Galletitas Chocolate,SNACKS,1305
+25,Galletitas Vainilla,SNACKS,4015
+26,Alfajor Triple,OTROS,1001
+27,Alfajor Simple,OTROS,2502
+28,Papas Fritas Clásicas 100g,SNACKS,936
+29,Papas Fritas Onduladas 100g,SNACKS,1868
+30,Maní Salado 200g,GRANOS Y CEREALES,4875
+31,Mix de Frutos Secos 200g,OTROS,3409
+32,Chocolate Amargo 100g,SNACKS,2234
+33,Chocolate con Leche 100g,LÁCTEOS,1255
+34,Turrón 50g,BEBIDAS ALCOHÓLICAS,503
+35,Barrita de Cereal 30g,SNACKS,4430
+36,Dulce de Leche 400g,LÁCTEOS,2559
+37,Mermelada de Durazno 400g,FRUTAS Y VERDURAS,3196
+38,Mermelada de Frutilla 400g,FRUTAS Y VERDURAS,1584
+39,Helado Vainilla 1L,CONGELADOS,469
+40,Helado Chocolate 1L,SNACKS,1215
+41,Aceite de Girasol 1L,GRANOS Y CEREALES,860
+42,Vinagre de Alcohol 500ml,OTROS,1195
+43,Salsa de Tomate 500g,GRANOS Y CEREALES,887
+44,Arroz Largo Fino 1kg,GRANOS Y CEREALES,2979
+45,Fideos Spaghetti 500g,GRANOS Y CEREALES,745
+46,Lentejas Secas 500g,GRANOS Y CEREALES,3036
+47,Garbanzos 500g,GRANOS Y CEREALES,2939
+48,Porotos Negros 500g,GRANOS Y CEREALES,4462
+49,Harina de Trigo 1kg,GRANOS Y CEREALES,2512
+50,Azúcar 1kg,GRANOS Y CEREALES,727
+51,Sal Fina 500g,GRANOS Y CEREALES,1745
+52,Detergente Líquido 750ml,LIMPIEZA,2582
+53,Lavandina 1L,LIMPIEZA,1664
+54,Jabón de Tocador,LIMPIEZA,1592
+55,Shampoo 400ml,CUIDADO PERSONAL,1407
+56,Papel Higiénico x4,HOGAR,2532
+57,Servilletas x100,HOGAR,4520
+58,Caramelos Masticables,OTROS,4752
+59,Chicle Menta,SNACKS,3612
+60,Chupetín,OTROS,4647
+61,Miel Pura 250g,FRUTAS Y VERDURAS,4982
+62,Stevia 100 sobres,ALIMENTOS,3848
+63,Granola 250g,GRANOS Y CEREALES,4337
+64,Avena Instantánea 250g,GRANOS Y CEREALES,3953
+65,Cerveza Rubia 1L,BEBIDAS ALCOHÓLICAS,2423
+66,Cerveza Negra 1L,BEBIDAS ALCOHÓLICAS,1533
+67,Vino Tinto Malbec 750ml,BEBIDAS ALCOHÓLICAS,4719
+68,Vino Blanco 750ml,BEBIDAS ALCOHÓLICAS,2684
+69,Sidra 750ml,BEBIDAS ALCOHÓLICAS,744
+70,Fernet 750ml,BEBIDAS ALCOHÓLICAS,4061
+71,Vodka 700ml,BEBIDAS ALCOHÓLICAS,508
+72,Ron 700ml,BEBIDAS ALCOHÓLICAS,3876
+73,Gin 700ml,BEBIDAS ALCOHÓLICAS,1561
+74,Whisky 750ml,BEBIDAS ALCOHÓLICAS,2953
+75,Licor de Café 700ml,ALIMENTOS,3204
+76,Pizza Congelada Muzzarella,CONGELADOS,4286
+77,Empanadas Congeladas,CONGELADOS,4778
+78,Verduras Congeladas Mix,CONGELADOS,4289
+79,Hamburguesas Congeladas x4,CONGELADOS,2420
+80,Helado de Frutilla 1L,CONGELADOS,1981
+81,Aceitunas Verdes 200g,FRUTAS Y VERDURAS,2520
+82,Aceitunas Negras 200g,FRUTAS Y VERDURAS,2394
+83,Queso Untable 190g,LÁCTEOS,1830
+84,Queso Azul 150g,LÁCTEOS,1645
+85,Jugo en Polvo Naranja,BEBIDAS,1856
+86,Jugo en Polvo Limón,BEBIDAS,4090
+87,Sopa Instantánea Pollo,ALIMENTOS,1679
+88,Caldo Concentrado Carne,ALIMENTOS,2570
+89,Caldo Concentrado Verdura,ALIMENTOS,1003
+90,Toallas Húmedas x50,OTROS,2902
+91,Desodorante Aerosol,CUIDADO PERSONAL,4690
+92,Crema Dental 90g,CUIDADO PERSONAL,2512
+93,Cepillo de Dientes,CUIDADO PERSONAL,2142
+94,Hilo Dental,CUIDADO PERSONAL,1418
+95,Mascarilla Capilar,CUIDADO PERSONAL,1581
+96,Suavizante 1L,ALIMENTOS,4920
+97,Limpiavidrios 500ml,LIMPIEZA,872
+98,Desengrasante 500ml,LIMPIEZA,2843
+99,Esponjas x3,OTROS,2430
+100,Trapo de Piso,LIMPIEZA,4854

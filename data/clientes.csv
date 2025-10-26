@@ -1,0 +1,101 @@
+id_cliente,nombre_cliente,email,ciudad,fecha_alta
+1,Mariana Lopez,mariana.lopez@mail.com,Carlos Paz,01-01-23
+2,Nicolas Rojas,nicolas.rojas@mail.com,Carlos Paz,01-02-23
+3,Hernan Martinez,hernan.martinez@mail.com,Rio Cuarto,01-03-23
+4,Uma Martinez,uma.martinez@mail.com,Carlos Paz,01-04-23
+5,Agustina Flores,agustina.flores@mail.com,Cordoba,01-05-23
+6,Uma Medina,uma.medina@mail.com,Villa Maria,01-06-23
+7,Emilia Castro,emilia.castro@mail.com,Rio Cuarto,01-07-23
+8,Bruno Castro,bruno.castro@mail.com,Carlos Paz,01-08-23
+9,Yamila Molina,yamila.molina@mail.com,Carlos Paz,01-09-23
+10,Karina Acosta,karina.acosta@mail.com,Cordoba,01-10-23
+11,Helena Sanchez,helena.sanchez@mail.com,Villa Maria,01-11-23
+12,Gael Gomez,gael.gomez@mail.com,Alta Gracia,01-12-23
+13,Ivana Sanchez,ivana.sanchez@mail.com,Carlos Paz,01-13-23
+14,Gael Martinez,gael.martinez@mail.com,Carlos Paz,01-14-23
+15,Tomas Ruiz,tomas.ruiz@mail.com,Cordoba,01-15-23
+16,Felipe Alvarez,felipe.alvarez@mail.com,Rio Cuarto,01-16-23
+17,Pablo Gomez,pablo.gomez@mail.com,Villa Maria,01-17-23
+18,Ivana Torres,ivana.torres@mail.com,Carlos Paz,01-18-23
+19,Uma Silva,uma.silva@mail.com,Mendiolaza,01-19-23
+20,Tomas Acosta,tomas.acosta@mail.com,Rio Cuarto,01-20-23
+21,Elena Rodriguez,elena.rodriguez@mail.com,Alta Gracia,01-21-23
+22,Franco Rodriguez,franco.rodriguez@mail.com,Alta Gracia,01-22-23
+23,Helena Fernandez,helena.fernandez@mail.com,Rio Cuarto,01-23-23
+24,Nicolas Silva,nicolas.silva@mail.com,Villa Maria,01-24-23
+25,Karina Castro,karina.castro@mail.com,Rio Cuarto,01-25-23
+26,Camila Sanchez,camila.sanchez@mail.com,Alta Gracia,01-26-23
+27,Tomas Castro,tomas.castro@mail.com,Rio Cuarto,01-27-23
+28,Rocio Silva,rocio.silva@mail.com,Cordoba,01-28-23
+29,Diego Fernandez,diego.fernandez@mail.com,Alta Gracia,01-29-23
+30,Ivana Medina,ivana.medina@mail.com,Alta Gracia,01-30-23
+31,Felipe Ruiz,felipe.ruiz@mail.com,Villa Maria,01-31-23
+32,Martina Alvarez,martina.alvarez@mail.com,Mendiolaza,02-01-23
+33,Franco Acosta,franco.acosta@mail.com,Rio Cuarto,02-02-23
+34,Bruno Castro,bruno.castro2@mail.com,Villa Maria,02-03-23
+35,Yamila Lopez,yamila.lopez@mail.com,Mendiolaza,02-04-23
+36,Martina Molina,martina.molina@mail.com,Mendiolaza,02-05-23
+37,Martina Perez,martina.perez@mail.com,Mendiolaza,02-06-23
+38,Franco Herrera,franco.herrera@mail.com,Alta Gracia,02-07-23
+39,Santiago Diaz,santiago.diaz@mail.com,Alta Gracia,02-08-23
+40,Felipe Diaz,felipe.diaz@mail.com,Rio Cuarto,02-09-23
+41,Elena Rodriguez,elena.rodriguez2@mail.com,Alta Gracia,02-10-23
+42,Tomas Flores,tomas.flores@mail.com,Alta Gracia,02-11-23
+43,Lucas Perez,lucas.perez@mail.com,Mendiolaza,02-12-23
+44,Camila Romero,camila.romero@mail.com,Carlos Paz,02-13-23
+45,Olivia Castro,olivia.castro@mail.com,Rio Cuarto,02-14-23
+46,Agustina Martinez,agustina.martinez@mail.com,Alta Gracia,02-15-23
+47,Franco Silva,franco.silva@mail.com,Alta Gracia,02-16-23
+48,Rocio Alvarez,rocio.alvarez@mail.com,Cordoba,02-17-23
+49,Olivia Gomez,olivia.gomez@mail.com,Rio Cuarto,02-18-23
+50,Lucas Diaz,lucas.diaz@mail.com,Carlos Paz,02-19-23
+51,Agustina Gomez,agustina.gomez@mail.com,Rio Cuarto,02-20-23
+52,Diego Diaz,diego.diaz@mail.com,Rio Cuarto,02-21-23
+53,Emilia Rojas,emilia.rojas@mail.com,Mendiolaza,02-22-23
+54,Uma Herrera,uma.herrera@mail.com,Alta Gracia,02-23-23
+55,Olivia Ruiz,olivia.ruiz@mail.com,Mendiolaza,02-24-23
+56,Bruno Diaz,bruno.diaz@mail.com,Rio Cuarto,02-25-23
+57,Julian Acosta,julian.acosta@mail.com,Rio Cuarto,02-26-23
+58,Karina Acosta,karina.acosta2@mail.com,Rio Cuarto,02-27-23
+59,Emilia Ruiz,emilia.ruiz@mail.com,Villa Maria,02-28-23
+60,Uma Gonzalez,uma.gonzalez@mail.com,Alta Gracia,03-01-23
+61,Guadalupe Martinez,guadalupe.martinez@mail.com,Rio Cuarto,03-02-23
+62,Guadalupe Romero,guadalupe.romero@mail.com,Carlos Paz,03-03-23
+63,Pablo Medina,pablo.medina@mail.com,Cordoba,03-04-23
+64,Julian Alvarez,julian.alvarez@mail.com,Villa Maria,03-05-23
+65,Tomas Perez,tomas.perez@mail.com,Alta Gracia,03-06-23
+66,Tomas Herrera,tomas.herrera@mail.com,Villa Maria,03-07-23
+67,Ivana Romero,ivana.romero@mail.com,Alta Gracia,03-08-23
+68,Uma Torres,uma.torres@mail.com,Villa Maria,03-09-23
+69,Felipe Flores,felipe.flores@mail.com,Rio Cuarto,03-10-23
+70,Julian Diaz,julian.diaz@mail.com,Carlos Paz,03-11-23
+71,Valentina Alvarez,valentina.alvarez@mail.com,Villa Maria,03-12-23
+72,Camila Rodriguez,camila.rodriguez@mail.com,Cordoba,03-13-23
+73,Yamila Diaz,yamila.diaz@mail.com,Alta Gracia,03-14-23
+74,Zoe Flores,zoe.flores@mail.com,Carlos Paz,03-15-23
+75,Santiago Castro,santiago.castro@mail.com,Rio Cuarto,03-16-23
+76,Pablo Perez,pablo.perez@mail.com,Mendiolaza,03-17-23
+77,Bruno Alvarez,bruno.alvarez@mail.com,Villa Maria,03-18-23
+78,Emilia Alvarez,emilia.alvarez@mail.com,Villa Maria,03-19-23
+79,Olivia Perez,olivia.perez@mail.com,Carlos Paz,03-20-23
+80,Gael Ruiz,gael.ruiz@mail.com,Mendiolaza,03-21-23
+81,Camila Ruiz,camila.ruiz@mail.com,Carlos Paz,03-22-23
+82,Lucas Lopez,lucas.lopez@mail.com,Alta Gracia,03-23-23
+83,Franco Gomez,franco.gomez@mail.com,Rio Cuarto,03-24-23
+84,Pablo Sanchez,pablo.sanchez@mail.com,Cordoba,03-25-23
+85,Agustina Martinez,agustina.martinez2@mail.com,Mendiolaza,03-26-23
+86,Diego Torres,diego.torres@mail.com,Cordoba,03-27-23
+87,Bautista Lopez,bautista.lopez@mail.com,Alta Gracia,03-28-23
+88,Felipe Castro,felipe.castro@mail.com,Villa Maria,03-29-23
+89,Karina Martinez,karina.martinez@mail.com,Rio Cuarto,03-30-23
+90,Guadalupe Ruiz,guadalupe.ruiz@mail.com,Rio Cuarto,03-31-23
+91,Uma Sanchez,uma.sanchez@mail.com,Mendiolaza,04-01-23
+92,Mariana Rodriguez,mariana.rodriguez@mail.com,Alta Gracia,04-02-23
+93,Gael Rojas,gael.rojas@mail.com,Alta Gracia,04-03-23
+94,Elena Sanchez,elena.sanchez@mail.com,Mendiolaza,04-04-23
+95,Olivia Perez,olivia.perez2@mail.com,Rio Cuarto,04-05-23
+96,Rocio Gonzalez,rocio.gonzalez@mail.com,Cordoba,04-06-23
+97,Uma Alvarez,uma.alvarez@mail.com,Cordoba,04-07-23
+98,Camila Castro,camila.castro@mail.com,Cordoba,04-08-23
+99,Bruno Molina,bruno.molina@mail.com,Villa Maria,04-09-23
+100,Agustina Lopez,agustina.lopez@mail.com,Cordoba,04-10-23

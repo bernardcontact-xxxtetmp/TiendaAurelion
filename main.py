@@ -1,160 +1,549 @@
+# main.py – Tienda Aurelion – versión robusta
 import pandas as pd
-from datetime import datetime
 import os
-import sys
+import datetime
+import argparse
+from unidecode import unidecode
 
-# Detectar si se ejecuta como .exe (PyInstaller)
-if getattr(sys, 'frozen', False):
-    BASE_DIR = os.path.dirname(sys.executable)
-else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# ----------  colores rápidos  ----------
+C = {"v": "\033[92m", "a": "\033[93m", "r": "\033[91m", "b": "\033[94m", "x": "\033[0m"}
 
-# Ruta segura a la carpeta de datos
-DATA_DIR = os.path.join(BASE_DIR, 'data')
+# ----------  utilidades  ----------
+def normalizar(texto: str) -> str:
+    """Normaliza texto para comparaciones."""
+    return unidecode(str(texto).lower().strip())
 
-# Función para convertir fechas desde formato Excel o texto
-def convertir_fecha(valor):
-    try:
-        return datetime.fromordinal(datetime(1900, 1, 1).toordinal() + int(valor) - 2)
-    except:
-        return pd.to_datetime(valor, errors='coerce')
+def log_consulta(tipo: str, consulta: str) -> None:
+    """Guarda registro de consultas."""
+    with open("log_consultas.txt", "a", encoding="utf-8") as f:
+        f.write(f"{datetime.datetime.now()} | {tipo} | {consulta}\n")
 
-# Cargar los archivos CSV desde la carpeta 'data'
-clientes = pd.read_csv(os.path.join(DATA_DIR, 'clientes.csv'), encoding='utf-8')
-productos = pd.read_csv(os.path.join(DATA_DIR, 'productos.csv'), encoding='utf-8')
-ventas = pd.read_csv(os.path.join(DATA_DIR, 'ventas.csv'), encoding='utf-8')
-detalle_ventas = pd.read_csv(os.path.join(DATA_DIR, 'detalle_ventas.csv'), encoding='utf-8')
+def safe_col(df: pd.DataFrame, col: str, default="NO DEFINIDO"):
+    """Devuelve la columna si existe; sino, una Serie constante."""
+    return df[col] if col in df.columns else pd.Series([default] * len(df))
 
-# Renombrar columnas clave antes de limpiar
-clientes.rename(columns={'nombre': 'nombre_cliente'}, inplace=True)
-productos.rename(columns={'nombre': 'nombre_producto'}, inplace=True)
+# ----------  enriquecimiento caché  ----------
+CACHE_PROD = "data/productos_enriquecido.csv"
 
-# Limpieza de datos
-clientes.drop_duplicates(inplace=True)
-productos.drop_duplicates(inplace=True)
-ventas.drop_duplicates(inplace=True)
-detalle_ventas.drop_duplicates(inplace=True)
+def cargar_productos() -> pd.DataFrame:
+    """Carga productos con categoría enriquecida (cache)."""
+    if os.path.exists(CACHE_PROD):
+        print(C["v"] + "Usando cache de productos" + C["x"])
+        return pd.read_csv(CACHE_PROD)
+    print(C["a"] + "Generando cache de productos..." + C["x"])
+    prod = pd.read_csv(os.path.join("data", "productos.csv"))
+    prod['categoria'] = prod['nombre_producto'].apply(enriquecer_categoria_por_nombre)
+    prod.to_csv(CACHE_PROD, index=False)
+    return prod
 
-clientes.dropna(subset=['id_cliente', 'nombre_cliente'], inplace=True)
-productos.dropna(subset=['id_producto', 'nombre_producto'], inplace=True)
-ventas.dropna(subset=['id_venta', 'id_cliente', 'fecha'], inplace=True)
-detalle_ventas.dropna(subset=['id_venta', 'id_producto', 'cantidad', 'importe'], inplace=True)
+def enriquecer_categoria_por_nombre(nombre: str) -> str:
+    """Reglas de categorización."""
+    nombre = normalizar(nombre)
+    rules = {
+        'bebida': 'BEBIDAS', 'jugo': 'BEBIDAS', 'agua': 'BEBIDAS',
+        'cerveza': 'BEBIDAS ALCOHÓLICAS', 'vino': 'BEBIDAS ALCOHÓLICAS',
+        'whisky': 'BEBIDAS ALCOHÓLICAS', 'ron': 'BEBIDAS ALCOHÓLICAS',
+        'fernet': 'BEBIDAS ALCOHÓLICAS', 'vodka': 'BEBIDAS ALCOHÓLICAS',
+        'gin': 'BEBIDAS ALCOHÓLICAS', 'sidra': 'BEBIDAS ALCOHÓLICAS',
+        'queso': 'LÁCTEOS', 'yogur': 'LÁCTEOS', 'leche': 'LÁCTEOS',
+        'gallet': 'SNACKS', 'papas fritas': 'SNACKS', 'chocolate': 'SNACKS',
+        'chicle': 'SNACKS', 'turron': 'SNACKS', 'barrita': 'SNACKS',
+        'lavandina': 'LIMPIEZA', 'desengrasante': 'LIMPIEZA',
+        'limpiavidrios': 'LIMPIEZA', 'detergente': 'LIMPIEZA',
+        'shampoo': 'CUIDADO PERSONAL', 'desodorante': 'CUIDADO PERSONAL',
+        'crema dental': 'CUIDADO PERSONAL', 'cepillo': 'CUIDADO PERSONAL',
+        'hilo dental': 'CUIDADO PERSONAL', 'mascarilla': 'CUIDADO PERSONAL',
+        'pizza': 'CONGELADOS', 'hamburguesa': 'CONGELADOS',
+        'empanada': 'CONGELADOS', 'verduras congeladas': 'CONGELADOS',
+        'helado': 'CONGELADOS',
+        'arroz': 'GRANOS Y CEREALES', 'fideos': 'GRANOS Y CEREALES',
+        'lenteja': 'GRANOS Y CEREALES', 'garbanzo': 'GRANOS Y CEREALES',
+        'poroto': 'GRANOS Y CEREALES', 'avena': 'GRANOS Y CEREALES',
+        'granola': 'GRANOS Y CEREALES', 'harina': 'GRANOS Y CEREALES',
+        'azucar': 'GRANOS Y CEREALES', 'sal': 'GRANOS Y CEREALES',
+        'aceite': 'GRANOS Y CEREALES',
+        'aceituna': 'FRUTAS Y VERDURAS', 'mermelada': 'FRUTAS Y VERDURAS',
+        'maní': 'FRUTAS Y VERDURAS', 'mix frutos': 'FRUTAS Y VERDURAS',
+        'miel': 'FRUTAS Y VERDURAS',
+        'pan': 'PANIFICADOS', 'medialuna': 'PANIFICADOS',
+        'yerba': 'ALIMENTOS', 'te': 'ALIMENTOS', 'cafe': 'ALIMENTOS',
+        'sopa': 'ALIMENTOS', 'caldo': 'ALIMENTOS',
+        'toalla húmeda': 'CUIDADO PERSONAL', 'trapo de piso': 'LIMPIEZA',
+        'servilleta': 'HOGAR', 'papel higienico': 'HOGAR',
+        'suavizante': 'LIMPIEZA', 'jabon': 'LIMPIEZA',
+    }
+    for key, cat in rules.items():
+        if key in nombre:
+            return cat
+    return 'OTROS'
 
-clientes.reset_index(drop=True, inplace=True)
-productos.reset_index(drop=True, inplace=True)
-ventas.reset_index(drop=True, inplace=True)
-detalle_ventas.reset_index(drop=True, inplace=True)
+# ----------  carga de datos  ----------
+def cargar_datos() -> dict:
+    """Carga todos los CSV y aplica conversiones/caches."""
+    base = "data"
+    arch = {
+        "clientes": "clientes.csv",
+        "ventas": "ventas.csv",
+        "detalle": "detalle_ventas.csv",
+    }
+    dfs = {}
+    for k, file in arch.items():
+        path = os.path.join(base, file)
+        if os.path.exists(path):
+            dfs[k] = pd.read_csv(path, encoding='utf-8-sig')
+            print(C["v"] + f"✅ Cargado: {path} ({len(dfs[k])} filas)" + C["x"])
+        else:
+            print(C["r"] + f"⚠️ No encontrado: {path}" + C["x"])
+            dfs[k] = pd.DataFrame()
+    # fechas
+    if not dfs["ventas"].empty:
+        dfs["ventas"]['fecha'] = pd.to_datetime(dfs["ventas"]['fecha'], format='%m-%d-%y', errors='coerce')
+    if not dfs["clientes"].empty:
+        dfs["clientes"]['fecha_alta'] = pd.to_datetime(dfs["clientes"]['fecha_alta'], format='%d-%m-%y', errors='coerce')
+        fecha_min = dfs["clientes"]['fecha_alta'].min()
+        if pd.isna(fecha_min):
+            fecha_min = pd.Timestamp('2023-01-01')
+        dfs["clientes"]['fecha_alta'] = dfs["clientes"]['fecha_alta'].fillna(fecha_min)
+    dfs["productos"] = cargar_productos()
+    return dfs
 
-# Convertir fechas
-ventas['fecha'] = ventas['fecha'].apply(convertir_fecha)
-clientes['fecha_alta'] = clientes['fecha_alta'].apply(convertir_fecha)
+# ----------  merge  ----------
+def fusionar_datos(dfs: dict) -> pd.DataFrame:
+    """Devuelve DataFrame único con joins y columnas unificadas."""
+    det = dfs["detalle"]
+    ven = dfs["ventas"]
+    pro = dfs["productos"]
+    cli = dfs["clientes"]
+    if det.empty or ven.empty:
+        print(C["r"] + "❌ Falta detalle o ventas" + C["x"])
+        return pd.DataFrame()
+    df = (det.merge(ven, on="id_venta", how="left", suffixes=("", "_v"))
+            .merge(pro, on="id_producto", how="left", suffixes=("", "_p"))
+            .merge(cli, on="id_cliente", how="left", suffixes=("", "_c")))
+    df['nombre_cliente_final'] = safe_col(df, 'nombre_cliente')
+    df = df.loc[:, ~df.columns.duplicated()]
+    return df
 
-# Recategorizar productos según nombre
-def recategorizar_producto(nombre):
-    nombre = str(nombre).lower()
-    if any(x in nombre for x in ['pan', 'arroz', 'fideos', 'harina', 'azúcar', 'sal', 'lentejas', 'garbanzos', 'porotos']):
-        return 'Almacén y secos'
-    elif any(x in nombre for x in ['leche', 'yogur', 'queso', 'manteca', 'crema']):
-        return 'Lácteos y quesos'
-    elif any(x in nombre for x in ['coca', 'pepsi', 'sprite', 'fanta', 'agua', 'energética', 'mate', 'café', 'té']):
-        return 'Bebidas'
-    elif any(x in nombre for x in ['cerveza', 'vino', 'sidra', 'fernet', 'vodka', 'ron', 'gin', 'whisky', 'licor']):
-        return 'Bebidas alcohólicas'
-    elif any(x in nombre for x in ['jugo', 'jugo en polvo']):
-        return 'Jugos y concentrados'
-    elif any(x in nombre for x in ['galletita', 'alfajor', 'papas fritas', 'maní', 'mix', 'chocolate', 'turrón', 'caramelo', 'chicle', 'chupetín']):
-        return 'Snacks y golosinas'
-    elif any(x in nombre for x in ['shampoo', 'jabón', 'crema dental', 'desodorante', 'cepillo', 'hilo dental', 'mascarilla']):
-        return 'Cuidado personal'
-    elif any(x in nombre for x in ['detergente', 'lavandina', 'suavizante', 'limpiavidrios', 'desengrasante']):
-        return 'Limpieza'
-    elif any(x in nombre for x in ['papel higiénico', 'servilleta', 'toalla húmeda', 'esponja', 'trapo']):
-        return 'Higiene del hogar'
-    elif any(x in nombre for x in ['pizza', 'empanada', 'hamburguesa', 'helado', 'verduras congeladas']):
-        return 'Congelados'
-    elif any(x in nombre for x in ['aceite', 'vinagre', 'salsa', 'caldo', 'sopa', 'miel', 'stevia', 'granola', 'avena', 'aceituna']):
-        return 'Conservas y condimentos'
+# ----------  categoría final  ----------
+def mapear_categoria(cat: str) -> str:
+    return cat.upper()
+
+EMOJI = {
+    "ALIMENTOS": "🍽️", "SNACKS": "🍪", "BEBIDAS": "🥤",
+    "BEBIDAS ALCOHÓLICAS": "🍷", "LÁCTEOS": "🧀", "LIMPIEZA": "🧼",
+    "HOGAR": "🏠", "PANIFICADOS": "🍞", "CARNES Y EMBUTIDOS": "🥩",
+    "FRUTAS Y VERDURAS": "🥗", "GRANOS Y CEREALES": "🌾",
+    "CUIDADO PERSONAL": "🧴", "MASCOTAS": "🐾", "CONGELADOS": "❄️",
+    "OTROS": "📦"
+}
+
+# ----------  limpieza  ----------
+def limpiar_datos(df: pd.DataFrame) -> pd.DataFrame:
+    if 'categoria' in df.columns:
+        df['categoria_redefinida'] = df['categoria'].apply(mapear_categoria)
     else:
-        return 'Otros'
+        df['categoria_redefinida'] = 'OTROS'
+    return df
 
-# Aplicar recategorización
-productos['categoria_redefinida'] = productos['nombre_producto'].apply(recategorizar_producto)
+# ----------  consultas  ----------
+def consultar_por_cliente(df: pd.DataFrame) -> None:
+    nom = input("Nombre o apellido: ").strip()
+    log_consulta("CLIENTE", nom)
+    mask = df['nombre_cliente_final'].astype(str).apply(normalizar).str.contains(normalizar(nom), na=False)
+    out = df[mask].head(50)   # top 50
+    print(f"Coincidencias: {len(out)}")
+    print(out)
+    input("\nENTER para volver...")
 
-# Unir tablas
-ventas_clientes = ventas.merge(clientes, on='id_cliente')
-detalle_productos = detalle_ventas.merge(productos, on='id_producto')
-datos_completos = detalle_productos.merge(ventas_clientes, on='id_venta')
-
-# Agrupar productos por categoría redefinida
-productos_por_categoria = productos.groupby('categoria_redefinida')['nombre_producto'].apply(list).to_dict()
-
-# Función: consultar ventas por ciudad
-def consultar_por_ciudad(ciudad):
-    filtrado = datos_completos[datos_completos['ciudad'].str.lower() == ciudad.lower()]
-    if filtrado.empty:
-        print(f"\nNo se encontraron ventas en la ciudad '{ciudad}'.")
-    else:
-        print(f"\nVentas en {ciudad}:")
-        print(filtrado[['nombre_cliente', 'nombre_producto', 'cantidad', 'importe']].head())
-        print(f"Total vendido: ₡{filtrado['importe'].sum():,.2f}")
-
-# Función: consultar productos comprados por cliente
-def consultar_por_cliente(nombre):
-    filtrado = datos_completos[datos_completos['nombre_cliente'].str.lower().str.contains(nombre.lower())]
-    if filtrado.empty:
-        print(f"\nNo se encontraron compras para el cliente '{nombre}'.")
-    else:
-        print(f"\nCompras de {nombre}:")
-        print(filtrado[['nombre_cliente', 'nombre_producto', 'cantidad', 'importe']].head())
-        print(f"Total gastado: ₡{filtrado['importe'].sum():,.2f}")
-
-# Función: consultar ventas por categoría redefinida
-def consultar_por_categoria(categoria):
-    if 'categoria_redefinida' not in datos_completos.columns:
-        print("⚠️ La columna 'categoria_redefinida' no está disponible en los datos.")
+def consultar_por_ciudad(df: pd.DataFrame) -> None:
+    if 'ciudad' not in df.columns:
+        print(C["r"] + "⚠️ Sin datos de ciudad" + C["x"])
+        input()
         return
-    filtrado = datos_completos[datos_completos['categoria_redefinida'].str.lower().str.contains(categoria.lower())]
-    if filtrado.empty:
-        print(f"\nNo se encontraron ventas en la categoría '{categoria}'.")
-    else:
-        print(f"\nVentas en la categoría '{categoria}':")
-        print(filtrado[['nombre_producto', 'categoria_redefinida', 'cantidad', 'importe']].head())
-        print(f"Total vendido en esta categoría: ₡{filtrado['importe'].sum():,.2f}")
+    ciud = sorted(df['ciudad'].dropna().unique())
+    for i, c in enumerate(ciud, 1):
+        print(f"{i}. {c}")
+    try:
+        ciu = ciud[int(input("Nº: ")) - 1]
+    except:
+        print(C["r"] + "❌ Opción inválida" + C["x"])
+        input()
+        return
+    log_consulta("CIUDAD", ciu)
+    print(df[df['ciudad'].astype(str).apply(normalizar) == normalizar(ciu)].head(50))
+    input("\nENTER...")
 
-# Función: mostrar productos por categoría redefinida
-def mostrar_productos_por_categoria():
-    print("\n📦 Productos disponibles por categoría:")
-    for categoria, lista_productos in productos_por_categoria.items():
-        print(f"\n🗂️ {categoria}:")
-        for producto in lista_productos:
-            print(f"  - {producto}")
+def consultar_por_categoria(df: pd.DataFrame) -> None:
+    if 'categoria_redefinida' not in df.columns:
+        print(C["r"] + "⚠️ Sin categorías" + C["x"])
+        input()
+        return
+    cats = sorted(df['categoria_redefinida'].dropna().unique())
+    for i, c in enumerate(cats, 1):
+        print(f"{i}. {EMOJI.get(c, '')} {c}")
+    try:
+        cat = cats[int(input("Nº: ")) - 1]
+    except:
+        print(C["r"] + "❌ Opción inválida" + C["x"])
+        input()
+        return
+    log_consulta("CATEGORÍA", cat)
+    print(df[df['categoria_redefinida'] == cat].head(50))
+    input("\nENTER...")
 
-# Interfaz principal con bucle y salida personalizada
-if __name__ == "__main__":
-    mensaje_salida = "Gracias por usar el sistema Tienda Aurelion. Que tus ventas sean abundantes y tus datos limpios."
+def resumen_por_cliente(df: pd.DataFrame) -> None:
+    nom = input("Nombre cliente: ").strip()
+    log_consulta("RESUMEN", nom)
+    mask = df['nombre_cliente_final'].astype(str).apply(normalizar).str.contains(normalizar(nom), na=False)
+    sub = df[mask]
+    if sub.empty:
+        print(C["r"] + "❌ Sin datos" + C["x"])
+        input()
+        return
+    res = (sub.groupby('nombre_producto')
+             .agg(total_cant=('cantidad', 'sum'),
+                  total_pesos=('importe', 'sum'))
+             .sort_values('total_pesos', ascending=False))
+    pd.options.display.float_format = "${:,.0f}".format
+    print(res.head(10))
+    input("\nENTER...")
+
+# ----------  export  ----------
+def exportar_datos_limpios(df: pd.DataFrame, comprimir: bool = False) -> None:
+    """Exporta CSV listo para Power-BI (opcionalmente comprimido)."""
+    cols = ['fecha', 'id_cliente', 'nombre_cliente_final', 'ciudad',
+            'id_producto', 'nombre_producto', 'categoria_redefinida',
+            'cantidad', 'importe', 'medio_pago']
+    cols = [c for c in cols if c in df.columns]
+    archivo = "datos_powerbi.csv" + (".gz" if comprimir else "")
+    df[cols].to_csv(archivo, index=False, encoding='utf-8-sig', compression='gzip' if comprimir else None)
+    print(C["v"] + f"✅ Exportado: {archivo}" + C["x"])
+    input("\nENTER...")
+
+# ----------  menú  ----------
+def mostrar_menu() -> None:
+    print("\n🛒  TIENDA AURELION – CONSULTAS")
+    print("1. Por cliente")
+    print("2. Por ciudad")
+    print("3. Por categoría")
+    print("4. Salir")
+    print("5. Exportar CSV")
+    print("6. Resumen por cliente")
+
+# ----------  main  ----------
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Tienda Aurelion – consultas y export")
+    parser.add_argument("--export", action="store_true", help="Exporta CSV y sale")
+    parser.add_argument("--gzip", action="store_true", help="Comprime el CSV")
+    args = parser.parse_args()
+
+    dfs = cargar_datos()
+    datos_raw = fusionar_datos(dfs)
+    if datos_raw.empty:
+        print(C["r"] + "⛔ Sin datos para trabajar" + C["x"])
+        exit()
+    datos = limpiar_datos(datos_raw)
+
+    if args.export:
+        exportar_datos_limpios(datos, comprimir=args.gzip)
+        exit()
 
     while True:
-        print("\n🛒 SISTEMA DE CONSULTA DE VENTAS — TIENDA AURELION")
-        print("1. Consultar por cliente")
-        print("2. Consultar por ciudad")
-        print("3. Consultar por categoría de producto")
-        print("4. Mostrar productos por categoría")
-        print("5. Salir del sistema")
-        opcion = input("Seleccione una opción (1, 2, 3, 4 o 5): ")
-
-        if opcion == "1":
-            cliente = input("Ingrese el nombre del cliente: ")
-            consultar_por_cliente(cliente)
-        elif opcion == "2":
-            ciudad = input("Ingrese el nombre de la ciudad: ")
-            consultar_por_ciudad(ciudad)
-        elif opcion == "3":
-            categoria = input("Ingrese la categoría del producto: ")
-            consultar_por_categoria(categoria)
-        elif opcion == "4":
-            mostrar_productos_por_categoria()
-        elif opcion == "5":
-            print(f"\n🧾 {mensaje_salida}")
+        mostrar_menu()
+        try:
+            op = int(input("Opción (1-6): ").strip())
+        except ValueError:
+            print(C["r"] + "❌ Número válido, por favor" + C["x"])
+            continue
+        if op == 1:
+            consultar_por_cliente(datos)
+        elif op == 2:
+            consultar_por_ciudad(datos)
+        elif op == 3:
+            consultar_por_categoria(datos)
+        elif op == 4:
+            print(C["b"] + "👋 Hasta pronto" + C["x"])
             break
+        elif op == 5:
+            exportar_datos_limpios(datos, comprimir=False)
+        elif op == 6:
+            resumen_por_cliente(datos)
         else:
-            print("Opción no válida. Intente de nuevo.")
+            print(C["r"] + "❌ Opción 1-6" + C["x"])
+
+if __name__ == "__main__":
+    main()# main.py – Tienda Aurelion – versión robusta
+import pandas as pd
+import os
+import datetime
+import argparse
+from unidecode import unidecode
+
+# ----------  colores rápidos  ----------
+C = {"v": "\033[92m", "a": "\033[93m", "r": "\033[91m", "b": "\033[94m", "x": "\033[0m"}
+
+# ----------  utilidades  ----------
+def normalizar(texto: str) -> str:
+    """Normaliza texto para comparaciones."""
+    return unidecode(str(texto).lower().strip())
+
+def log_consulta(tipo: str, consulta: str) -> None:
+    """Guarda registro de consultas."""
+    with open("log_consultas.txt", "a", encoding="utf-8") as f:
+        f.write(f"{datetime.datetime.now()} | {tipo} | {consulta}\n")
+
+def safe_col(df: pd.DataFrame, col: str, default="NO DEFINIDO"):
+    """Devuelve la columna si existe; sino, una Serie constante."""
+    return df[col] if col in df.columns else pd.Series([default] * len(df))
+
+# ----------  enriquecimiento caché  ----------
+CACHE_PROD = "data/productos_enriquecido.csv"
+
+def cargar_productos() -> pd.DataFrame:
+    """Carga productos con categoría enriquecida (cache)."""
+    if os.path.exists(CACHE_PROD):
+        print(C["v"] + "Usando cache de productos" + C["x"])
+        return pd.read_csv(CACHE_PROD)
+    print(C["a"] + "Generando cache de productos..." + C["x"])
+    prod = pd.read_csv(os.path.join("data", "productos.csv"))
+    prod['categoria'] = prod['nombre_producto'].apply(enriquecer_categoria_por_nombre)
+    prod.to_csv(CACHE_PROD, index=False)
+    return prod
+
+def enriquecer_categoria_por_nombre(nombre: str) -> str:
+    """Reglas de categorización."""
+    nombre = normalizar(nombre)
+    rules = {
+        'bebida': 'BEBIDAS', 'jugo': 'BEBIDAS', 'agua': 'BEBIDAS',
+        'cerveza': 'BEBIDAS ALCOHÓLICAS', 'vino': 'BEBIDAS ALCOHÓLICAS',
+        'whisky': 'BEBIDAS ALCOHÓLICAS', 'ron': 'BEBIDAS ALCOHÓLICAS',
+        'fernet': 'BEBIDAS ALCOHÓLICAS', 'vodka': 'BEBIDAS ALCOHÓLICAS',
+        'gin': 'BEBIDAS ALCOHÓLICAS', 'sidra': 'BEBIDAS ALCOHÓLICAS',
+        'queso': 'LÁCTEOS', 'yogur': 'LÁCTEOS', 'leche': 'LÁCTEOS',
+        'gallet': 'SNACKS', 'papas fritas': 'SNACKS', 'chocolate': 'SNACKS',
+        'chicle': 'SNACKS', 'turron': 'SNACKS', 'barrita': 'SNACKS',
+        'lavandina': 'LIMPIEZA', 'desengrasante': 'LIMPIEZA',
+        'limpiavidrios': 'LIMPIEZA', 'detergente': 'LIMPIEZA',
+        'shampoo': 'CUIDADO PERSONAL', 'desodorante': 'CUIDADO PERSONAL',
+        'crema dental': 'CUIDADO PERSONAL', 'cepillo': 'CUIDADO PERSONAL',
+        'hilo dental': 'CUIDADO PERSONAL', 'mascarilla': 'CUIDADO PERSONAL',
+        'pizza': 'CONGELADOS', 'hamburguesa': 'CONGELADOS',
+        'empanada': 'CONGELADOS', 'verduras congeladas': 'CONGELADOS',
+        'helado': 'CONGELADOS',
+        'arroz': 'GRANOS Y CEREALES', 'fideos': 'GRANOS Y CEREALES',
+        'lenteja': 'GRANOS Y CEREALES', 'garbanzo': 'GRANOS Y CEREALES',
+        'poroto': 'GRANOS Y CEREALES', 'avena': 'GRANOS Y CEREALES',
+        'granola': 'GRANOS Y CEREALES', 'harina': 'GRANOS Y CEREALES',
+        'azucar': 'GRANOS Y CEREALES', 'sal': 'GRANOS Y CEREALES',
+        'aceite': 'GRANOS Y CEREALES',
+        'aceituna': 'FRUTAS Y VERDURAS', 'mermelada': 'FRUTAS Y VERDURAS',
+        'maní': 'FRUTAS Y VERDURAS', 'mix frutos': 'FRUTAS Y VERDURAS',
+        'miel': 'FRUTAS Y VERDURAS',
+        'pan': 'PANIFICADOS', 'medialuna': 'PANIFICADOS',
+        'yerba': 'ALIMENTOS', 'te': 'ALIMENTOS', 'cafe': 'ALIMENTOS',
+        'sopa': 'ALIMENTOS', 'caldo': 'ALIMENTOS',
+        'toalla húmeda': 'CUIDADO PERSONAL', 'trapo de piso': 'LIMPIEZA',
+        'servilleta': 'HOGAR', 'papel higienico': 'HOGAR',
+        'suavizante': 'LIMPIEZA', 'jabon': 'LIMPIEZA',
+    }
+    for key, cat in rules.items():
+        if key in nombre:
+            return cat
+    return 'OTROS'
+
+# ----------  carga de datos  ----------
+def cargar_datos() -> dict:
+    """Carga todos los CSV y aplica conversiones/caches."""
+    base = "data"
+    arch = {
+        "clientes": "clientes.csv",
+        "ventas": "ventas.csv",
+        "detalle": "detalle_ventas.csv",
+    }
+    dfs = {}
+    for k, file in arch.items():
+        path = os.path.join(base, file)
+        if os.path.exists(path):
+            dfs[k] = pd.read_csv(path, encoding='utf-8-sig')
+            print(C["v"] + f"✅ Cargado: {path} ({len(dfs[k])} filas)" + C["x"])
+        else:
+            print(C["r"] + f"⚠️ No encontrado: {path}" + C["x"])
+            dfs[k] = pd.DataFrame()
+    # fechas
+    if not dfs["ventas"].empty:
+        dfs["ventas"]['fecha'] = pd.to_datetime(dfs["ventas"]['fecha'], format='%m-%d-%y', errors='coerce')
+    if not dfs["clientes"].empty:
+        dfs["clientes"]['fecha_alta'] = pd.to_datetime(dfs["clientes"]['fecha_alta'], format='%d-%m-%y', errors='coerce')
+        fecha_min = dfs["clientes"]['fecha_alta'].min()
+        if pd.isna(fecha_min):
+            fecha_min = pd.Timestamp('2023-01-01')
+        dfs["clientes"]['fecha_alta'] = dfs["clientes"]['fecha_alta'].fillna(fecha_min)
+    dfs["productos"] = cargar_productos()
+    return dfs
+
+# ----------  merge  ----------
+def fusionar_datos(dfs: dict) -> pd.DataFrame:
+    """Devuelve DataFrame único con joins y columnas unificadas."""
+    det = dfs["detalle"]
+    ven = dfs["ventas"]
+    pro = dfs["productos"]
+    cli = dfs["clientes"]
+    if det.empty or ven.empty:
+        print(C["r"] + "❌ Falta detalle o ventas" + C["x"])
+        return pd.DataFrame()
+    df = (det.merge(ven, on="id_venta", how="left", suffixes=("", "_v"))
+            .merge(pro, on="id_producto", how="left", suffixes=("", "_p"))
+            .merge(cli, on="id_cliente", how="left", suffixes=("", "_c")))
+    df['nombre_cliente_final'] = safe_col(df, 'nombre_cliente')
+    df = df.loc[:, ~df.columns.duplicated()]
+    return df
+
+# ----------  categoría final  ----------
+def mapear_categoria(cat: str) -> str:
+    return cat.upper()
+
+EMOJI = {
+    "ALIMENTOS": "🍽️", "SNACKS": "🍪", "BEBIDAS": "🥤",
+    "BEBIDAS ALCOHÓLICAS": "🍷", "LÁCTEOS": "🧀", "LIMPIEZA": "🧼",
+    "HOGAR": "🏠", "PANIFICADOS": "🍞", "CARNES Y EMBUTIDOS": "🥩",
+    "FRUTAS Y VERDURAS": "🥗", "GRANOS Y CEREALES": "🌾",
+    "CUIDADO PERSONAL": "🧴", "MASCOTAS": "🐾", "CONGELADOS": "❄️",
+    "OTROS": "📦"
+}
+
+# ----------  limpieza  ----------
+def limpiar_datos(df: pd.DataFrame) -> pd.DataFrame:
+    if 'categoria' in df.columns:
+        df['categoria_redefinida'] = df['categoria'].apply(mapear_categoria)
+    else:
+        df['categoria_redefinida'] = 'OTROS'
+    return df
+
+# ----------  consultas  ----------
+def consultar_por_cliente(df: pd.DataFrame) -> None:
+    nom = input("Nombre o apellido: ").strip()
+    log_consulta("CLIENTE", nom)
+    mask = df['nombre_cliente_final'].astype(str).apply(normalizar).str.contains(normalizar(nom), na=False)
+    out = df[mask].head(50)   # top 50
+    print(f"Coincidencias: {len(out)}")
+    print(out)
+    input("\nENTER para volver...")
+
+def consultar_por_ciudad(df: pd.DataFrame) -> None:
+    if 'ciudad' not in df.columns:
+        print(C["r"] + "⚠️ Sin datos de ciudad" + C["x"])
+        input()
+        return
+    ciud = sorted(df['ciudad'].dropna().unique())
+    for i, c in enumerate(ciud, 1):
+        print(f"{i}. {c}")
+    try:
+        ciu = ciud[int(input("Nº: ")) - 1]
+    except:
+        print(C["r"] + "❌ Opción inválida" + C["x"])
+        input()
+        return
+    log_consulta("CIUDAD", ciu)
+    print(df[df['ciudad'].astype(str).apply(normalizar) == normalizar(ciu)].head(50))
+    input("\nENTER...")
+
+def consultar_por_categoria(df: pd.DataFrame) -> None:
+    if 'categoria_redefinida' not in df.columns:
+        print(C["r"] + "⚠️ Sin categorías" + C["x"])
+        input()
+        return
+    cats = sorted(df['categoria_redefinida'].dropna().unique())
+    for i, c in enumerate(cats, 1):
+        print(f"{i}. {EMOJI.get(c, '')} {c}")
+    try:
+        cat = cats[int(input("Nº: ")) - 1]
+    except:
+        print(C["r"] + "❌ Opción inválida" + C["x"])
+        input()
+        return
+    log_consulta("CATEGORÍA", cat)
+    print(df[df['categoria_redefinida'] == cat].head(50))
+    input("\nENTER...")
+
+def resumen_por_cliente(df: pd.DataFrame) -> None:
+    nom = input("Nombre cliente: ").strip()
+    log_consulta("RESUMEN", nom)
+    mask = df['nombre_cliente_final'].astype(str).apply(normalizar).str.contains(normalizar(nom), na=False)
+    sub = df[mask]
+    if sub.empty:
+        print(C["r"] + "❌ Sin datos" + C["x"])
+        input()
+        return
+    res = (sub.groupby('nombre_producto')
+             .agg(total_cant=('cantidad', 'sum'),
+                  total_pesos=('importe', 'sum'))
+             .sort_values('total_pesos', ascending=False))
+    pd.options.display.float_format = "${:,.0f}".format
+    print(res.head(10))
+    input("\nENTER...")
+
+# ----------  export  ----------
+def exportar_datos_limpios(df: pd.DataFrame, comprimir: bool = False) -> None:
+    """Exporta CSV listo para Power-BI (opcionalmente comprimido)."""
+    cols = ['fecha', 'id_cliente', 'nombre_cliente_final', 'ciudad',
+            'id_producto', 'nombre_producto', 'categoria_redefinida',
+            'cantidad', 'importe', 'medio_pago']
+    cols = [c for c in cols if c in df.columns]
+    archivo = "datos_powerbi.csv" + (".gz" if comprimir else "")
+    df[cols].to_csv(archivo, index=False, encoding='utf-8-sig', compression='gzip' if comprimir else None)
+    print(C["v"] + f"✅ Exportado: {archivo}" + C["x"])
+    input("\nENTER...")
+
+# ----------  menú  ----------
+def mostrar_menu() -> None:
+    print("\n🛒  TIENDA AURELION – CONSULTAS")
+    print("1. Por cliente")
+    print("2. Por ciudad")
+    print("3. Por categoría")
+    print("4. Salir")
+    print("5. Exportar CSV")
+    print("6. Resumen por cliente")
+
+# ----------  main  ----------
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Tienda Aurelion – consultas y export")
+    parser.add_argument("--export", action="store_true", help="Exporta CSV y sale")
+    parser.add_argument("--gzip", action="store_true", help="Comprime el CSV")
+    args = parser.parse_args()
+
+    dfs = cargar_datos()
+    datos_raw = fusionar_datos(dfs)
+    if datos_raw.empty:
+        print(C["r"] + "⛔ Sin datos para trabajar" + C["x"])
+        exit()
+    datos = limpiar_datos(datos_raw)
+
+    if args.export:
+        exportar_datos_limpios(datos, comprimir=args.gzip)
+        exit()
+
+    while True:
+        mostrar_menu()
+        try:
+            op = int(input("Opción (1-6): ").strip())
+        except ValueError:
+            print(C["r"] + "❌ Número válido, por favor" + C["x"])
+            continue
+        if op == 1:
+            consultar_por_cliente(datos)
+        elif op == 2:
+            consultar_por_ciudad(datos)
+        elif op == 3:
+            consultar_por_categoria(datos)
+        elif op == 4:
+            print(C["b"] + "👋 Hasta pronto" + C["x"])
+            break
+        elif op == 5:
+            exportar_datos_limpios(datos, comprimir=False)
+        elif op == 6:
+            resumen_por_cliente(datos)
+        else:
+            print(C["r"] + "❌ Opción 1-6" + C["x"])
+
+if __name__ == "__main__":
+    main()
