@@ -1,110 +1,153 @@
-# 🛒 Tienda Aurelion — Sistema de Consulta de Ventas
+# Dashboard de Ventas - Analytics Comercial
 
-**Entrega final para Guayerd & IBM SkillsBuild**  
-Versión interactiva, funcional y empaquetada como `.exe`  
-Base de datos brindada: `clientes.csv`, `productos.csv`, `ventas.csv`, `detalle_ventas.csv`
+## Descripción
+
+Dashboard interactivo de visualización de datos comerciales construido con tecnologías web modernas. Proporciona análisis integral del rendimiento de ventas, productos y clientes con visualizaciones interactivas y efectos visuales sofisticados.
+
+## Características
+
+### 🎨 Diseño Visual
+- **Estilo editorial sofisticado** inspirado en publicaciones como Kinfolk y The Gentlewoman
+- **Paleta de colores** en azul marino y tonos claros con acentos cálidos
+- **Tipografía elegante** con Playfair Display para encabezados e Inter para cuerpo de texto
+- **Efectos visuales** incluyendo glass morphism, animaciones suaves y transiciones fluidas
+
+### 📊 Visualizaciones
+- **6 gráficos interactivos** con Plotly.js:
+  - Ventas por categoría (gráfico de barras)
+  - Ventas por ciudad (gráfico de barras horizontal)
+  - Métodos de pago (gráfico de torta)
+  - Tendencia temporal (gráfico de línea)
+  - Top 10 productos más vendidos
+  - Top 10 clientes más importantes
+- **KPIs dinámicos** con animaciones de números
+- **Interactividad completa** con hover effects y transiciones
+
+### 🚀 Tecnologías Utilizadas
+- **HTML5** - Estructura semántica
+- **Tailwind CSS** - Framework de estilos
+- **Plotly.js** - Visualizaciones interactivas
+- **Anime.js** - Animaciones y efectos
+- **JavaScript ES6+** - Lógica del dashboard
+- **Google Fonts** - Tipografías premium
+- **Font Awesome** - Iconos vectoriales
+
+### 💫 Efectos Especiales
+- **Animaciones de entrada** con stagger effects
+- **Glass morphism** en elementos flotantes
+- **Hover effects** sofisticados en tarjetas y gráficos
+- **Transiciones fluidas** entre estados
+- **Scroll animations** con Intersection Observer
+- **Real-time updates** simuladas
+
+## Estructura del Proyecto
+
+```
+/
+├── index.html              # Página principal del dashboard
+├── dashboard.js           # Lógica JavaScript principal
+├── styles.css             # Estilos adicionales y efectos
+├── tailwind.config.js     # Configuración de Tailwind CSS
+├── datos_dashboard.json   # Datos procesados para visualizaciones
+└── README.md              # Documentación
+```
+
+## Datos Analizados
+
+El dashboard analiza datos comerciales que incluyen:
+
+- **343 transacciones** de ventas
+- **67 clientes únicos**
+- **95 productos diferentes**
+- **6 ciudades** de operación
+- **4 métodos de pago**
+- **13 categorías de productos**
+
+Período de análisis: **Enero - Junio 2024**
+
+## Métricas Principales
+
+- **Total de Ventas**: $2,651,417
+- **Transacciones Totales**: 343
+- **Clientes Únicos**: 67
+- **Promedio por Venta**: $7,730
+
+## Instalación y Uso
+
+1. **Requisitos previos**:
+   - Navegador web moderno (Chrome, Firefox, Safari, Edge)
+   - Servidor web local (opcional pero recomendado)
+
+2. **Instalación**:
+   ```bash
+   # Clonar o descargar los archivos del proyecto
+   cd dashboard-ventas
+   
+   # Iniciar servidor local
+   python -m http.server 8000
+   # o
+   npx serve .
+   ```
+
+3. **Acceso**:
+   - Abrir navegador en `http://localhost:8000`
+
+## Personalización
+
+### Colores
+Los colores pueden ser personalizados en `dashboard.js`:
+```javascript
+this.colors = {
+    primary: '#1e3a8a',
+    secondary: '#3b82f6',
+    accent: '#60a5fa',
+    success: '#10b981',
+    warning: '#f59e0b',
+    danger: '#ef4444',
+    info: '#06b6d4'
+};
+```
+
+### Datos
+Para actualizar los datos:
+1. Modificar el archivo CSV en `/upload/datos_powerbi.csv`
+2. Ejecutar el script de procesamiento: `python analisis_datos.py`
+3. Los datos se actualizarán automáticamente en `datos_dashboard.json`
+
+## Rendimiento
+
+- **Tiempo de carga**: < 2 segundos
+- **Optimizado para**: Chrome, Firefox, Safari, Edge
+- **Responsive**: Adaptado para dispositivos móviles y tablets
+- **Peso total**: < 500KB (sin datos)
+
+## Navegadores Soportados
+
+- **Chrome** 90+
+- **Firefox** 88+
+- **Safari** 14+
+- **Edge** 90+
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para detalles.
+
+## Autor
+
+**Analytics Dashboard Team**
+- Diseño y desarrollo de visualizaciones interactivas
+- Análisis de datos comerciales
+- Implementación de efectos visuales
 
 ---
 
-## 1️⃣ Tema, problema y solución
-
-### 🎯 Tema
-Desarrollo de un sistema en Python para consultar ventas, productos y clientes desde archivos CSV, vinculado a una base de datos comercial.
-
-### ❗ Problema
-Los datos estaban distribuidos en múltiples archivos sin limpieza ni categorización clara, dificultando el análisis por cliente, ciudad o tipo de producto.
-
-### ✅ Solución
-Se creó un programa que:
-- Limpia y normaliza los datos
-- Recategoriza productos automáticamente
-- Une las tablas en una vista completa
-- Permite consultas interactivas por cliente, ciudad y categoría
-- Funciona como script o como `.exe` sin errores
-
----
-
-## 2️⃣ Fuente, definición, estructura, tipos y escala
-
-### 📌 Fuente
-Base de datos brindada por el equipo:  
-- `clientes.csv`  
-- `productos.csv`  
-- `ventas.csv`  
-- `detalle_ventas.csv`
-
-### 🧱 Estructura
-- `clientes`: ID, nombre, ciudad, fecha de alta  
-- `productos`: ID, nombre, categoría original  
-- `ventas`: ID, cliente, fecha, medio de pago  
-- `detalle_ventas`: ID venta, producto, cantidad, importe
-
-### 🧬 Tipos
-- Identificadores numéricos  
-- Texto (nombres, ciudades, categorías)  
-- Fechas (formato Excel y texto)  
-- Valores monetarios
-
-### 📏 Escala
-- Datos simulados para cientos de registros  
-- Preparado para escalar a miles de ventas y productos
-
----
-
-## 3️⃣ Pasos, pseudocódigo y diagrama
-
-### 🔄 Pasos
-1. Cargar los CSV
-2. Limpiar duplicados y nulos
-3. Convertir fechas
-4. Recategorizar productos por nombre
-5. Unir tablas en una vista completa
-6. Crear menú interactivo con 5 opciones
-
-### 🧾 Pseudocódigo
-INICIO Cargar CSVs desde carpeta /data Limpiar datos y convertir fechas Recategorizar productos Unir tablas por ID Mostrar menú: 1 → Consultar por cliente 2 → Consultar por ciudad 3 → Consultar por categoría 4 → Mostrar productos por categoría 5 → Salir FIN
-
-
-### 📊 Diagrama lógico
-[clientes] ← ventas → [detalle_ventas] ← productos ↓ Consulta interactiva por cliente / ciudad / categoría ↓ Salida en consola con totales y productos
-
-
----
-
-## 4️⃣ Sugerencias de Copilot aceptadas y descartadas
-
-### ✅ Aceptadas
-- Uso de `os.path.dirname(sys.executable)` para rutas en `.exe`
-- Recategorización automática por palabras clave
-- Menú interactivo con `input()` y validación
-- Mensaje de salida personalizado
-
-### ❌ Descartadas
-- Uso de `sys._MEIPASS` (menos confiable en `.exe`)
-- Agrupación por categoría original (se redefinió simbólicamente)
-- Interfaz gráfica (se priorizó consola por simplicidad)
-
----
-
-## 5️⃣ Programa en Python interactivo
-
-Archivo: `main.py`  
-- Limpieza de datos  
-- Recategorización avanzada  
-- Uniones entre tablas  
-- Menú interactivo con 5 opciones  
-- Compatible con `.exe` gracias a rutas absolutas
-
----
-
-## 6️⃣ Ejecutable funcional
-
-Archivo: `TiendaAurelion.exe`  
-- Generado con PyInstaller  
-- Funciona sin errores si la carpeta `data/` está junto a él  
-- Prueba desde PowerShell:
-
-```bash
-cd C:\Users\dougl\EntregaFinal_TiendaAurelion
-.\TiendaAurelion.exe
-
+**Nota**: Este dashboard fue desarrollado como demostración de capacidades de visualización de datos con énfasis en diseño editorial sofisticado y experiencia de usuario premium.

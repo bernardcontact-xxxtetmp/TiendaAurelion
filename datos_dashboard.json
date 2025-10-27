@@ -1,0 +1,721 @@
+{
+  "resumen": {
+    "total_ventas": 2651417.0,
+    "total_cantidad": 1016,
+    "total_clientes": 67,
+    "total_productos": 95,
+    "total_transacciones": 343,
+    "promedio_venta": 7730.078717201166,
+    "fecha_inicio": "2024-01-02",
+    "fecha_fin": "2024-06-28"
+  },
+  "ventas_categoria": [
+    {
+      "categoria_redefinida": "OTROS",
+      "importe": 323034,
+      "cantidad": 98
+    },
+    {
+      "categoria_redefinida": "BEBIDAS ALCOHÓLICAS",
+      "importe": 289920,
+      "cantidad": 115
+    },
+    {
+      "categoria_redefinida": "ALIMENTOS",
+      "importe": 268458,
+      "cantidad": 93
+    },
+    {
+      "categoria_redefinida": "GRANOS Y CEREALES",
+      "importe": 259851,
+      "cantidad": 133
+    },
+    {
+      "categoria_redefinida": "LÁCTEOS",
+      "importe": 252258,
+      "cantidad": 89
+    },
+    {
+      "categoria_redefinida": "CONGELADOS",
+      "importe": 230092,
+      "cantidad": 84
+    },
+    {
+      "categoria_redefinida": "SNACKS",
+      "importe": 216413,
+      "cantidad": 90
+    },
+    {
+      "categoria_redefinida": "BEBIDAS",
+      "importe": 192989,
+      "cantidad": 51
+    },
+    {
+      "categoria_redefinida": "CUIDADO PERSONAL",
+      "importe": 187945,
+      "cantidad": 71
+    },
+    {
+      "categoria_redefinida": "FRUTAS Y VERDURAS",
+      "importe": 168324,
+      "cantidad": 70
+    },
+    {
+      "categoria_redefinida": "LIMPIEZA",
+      "importe": 165147,
+      "cantidad": 74
+    },
+    {
+      "categoria_redefinida": "HOGAR",
+      "importe": 48820,
+      "cantidad": 13
+    },
+    {
+      "categoria_redefinida": "PANIFICADOS",
+      "importe": 48166,
+      "cantidad": 35
+    }
+  ],
+  "ventas_ciudad": [
+    {
+      "ciudad": "Mendiolaza",
+      "importe": 229026,
+      "cantidad": 100
+    },
+    {
+      "ciudad": "Villa Maria",
+      "importe": 313350,
+      "cantidad": 106
+    },
+    {
+      "ciudad": "Carlos Paz",
+      "importe": 353852,
+      "cantidad": 126
+    },
+    {
+      "ciudad": "Cordoba",
+      "importe": 481482,
+      "cantidad": 200
+    },
+    {
+      "ciudad": "Alta Gracia",
+      "importe": 481504,
+      "cantidad": 185
+    },
+    {
+      "ciudad": "Rio Cuarto",
+      "importe": 792203,
+      "cantidad": 299
+    }
+  ],
+  "ventas_pago": [
+    {
+      "medio_pago": "efectivo",
+      "importe": 934819,
+      "cantidad": 345
+    },
+    {
+      "medio_pago": "qr",
+      "importe": 714280,
+      "cantidad": 266
+    },
+    {
+      "medio_pago": "tarjeta",
+      "importe": 460099,
+      "cantidad": 187
+    },
+    {
+      "medio_pago": "transferencia",
+      "importe": 542219,
+      "cantidad": 218
+    }
+  ],
+  "ventas_temporal": [
+    {
+      "fecha": "2024-01-02 00:00:00",
+      "importe": 26294,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-01-04 00:00:00",
+      "importe": 1876,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-01-06 00:00:00",
+      "importe": 61519,
+      "cantidad": 21
+    },
+    {
+      "fecha": "2024-01-08 00:00:00",
+      "importe": 18020,
+      "cantidad": 6
+    },
+    {
+      "fecha": "2024-01-09 00:00:00",
+      "importe": 61503,
+      "cantidad": 19
+    },
+    {
+      "fecha": "2024-01-10 00:00:00",
+      "importe": 84236,
+      "cantidad": 33
+    },
+    {
+      "fecha": "2024-01-12 00:00:00",
+      "importe": 16084,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-01-13 00:00:00",
+      "importe": 42313,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-01-18 00:00:00",
+      "importe": 7752,
+      "cantidad": 2
+    },
+    {
+      "fecha": "2024-01-19 00:00:00",
+      "importe": 38059,
+      "cantidad": 24
+    },
+    {
+      "fecha": "2024-01-20 00:00:00",
+      "importe": 9692,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-01-23 00:00:00",
+      "importe": 21828,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-01-24 00:00:00",
+      "importe": 11622,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-01-25 00:00:00",
+      "importe": 18520,
+      "cantidad": 11
+    },
+    {
+      "fecha": "2024-01-26 00:00:00",
+      "importe": 30101,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-01-29 00:00:00",
+      "importe": 26593,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-01-30 00:00:00",
+      "importe": 53828,
+      "cantidad": 15
+    },
+    {
+      "fecha": "2024-02-02 00:00:00",
+      "importe": 13363,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-02-04 00:00:00",
+      "importe": 3827,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-02-06 00:00:00",
+      "importe": 36413,
+      "cantidad": 17
+    },
+    {
+      "fecha": "2024-02-07 00:00:00",
+      "importe": 3725,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-02-09 00:00:00",
+      "importe": 50788,
+      "cantidad": 21
+    },
+    {
+      "fecha": "2024-02-12 00:00:00",
+      "importe": 22576,
+      "cantidad": 13
+    },
+    {
+      "fecha": "2024-02-13 00:00:00",
+      "importe": 37256,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-02-16 00:00:00",
+      "importe": 33310,
+      "cantidad": 15
+    },
+    {
+      "fecha": "2024-02-17 00:00:00",
+      "importe": 47823,
+      "cantidad": 22
+    },
+    {
+      "fecha": "2024-02-18 00:00:00",
+      "importe": 23234,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-02-19 00:00:00",
+      "importe": 13560,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-02-20 00:00:00",
+      "importe": 18439,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-02-21 00:00:00",
+      "importe": 20048,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-02-23 00:00:00",
+      "importe": 16531,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-02-25 00:00:00",
+      "importe": 50182,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-02-27 00:00:00",
+      "importe": 15966,
+      "cantidad": 7
+    },
+    {
+      "fecha": "2024-03-03 00:00:00",
+      "importe": 35760,
+      "cantidad": 12
+    },
+    {
+      "fecha": "2024-03-05 00:00:00",
+      "importe": 45142,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-03-06 00:00:00",
+      "importe": 27441,
+      "cantidad": 8
+    },
+    {
+      "fecha": "2024-03-07 00:00:00",
+      "importe": 5786,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-03-08 00:00:00",
+      "importe": 15147,
+      "cantidad": 7
+    },
+    {
+      "fecha": "2024-03-09 00:00:00",
+      "importe": 9766,
+      "cantidad": 2
+    },
+    {
+      "fecha": "2024-03-11 00:00:00",
+      "importe": 21099,
+      "cantidad": 12
+    },
+    {
+      "fecha": "2024-03-13 00:00:00",
+      "importe": 6075,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-03-14 00:00:00",
+      "importe": 42679,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-03-17 00:00:00",
+      "importe": 34186,
+      "cantidad": 17
+    },
+    {
+      "fecha": "2024-03-18 00:00:00",
+      "importe": 35631,
+      "cantidad": 16
+    },
+    {
+      "fecha": "2024-03-21 00:00:00",
+      "importe": 10100,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-03-24 00:00:00",
+      "importe": 7710,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-03-25 00:00:00",
+      "importe": 33150,
+      "cantidad": 18
+    },
+    {
+      "fecha": "2024-03-26 00:00:00",
+      "importe": 36035,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-03-28 00:00:00",
+      "importe": 2012,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-03-29 00:00:00",
+      "importe": 20544,
+      "cantidad": 6
+    },
+    {
+      "fecha": "2024-04-04 00:00:00",
+      "importe": 31258,
+      "cantidad": 11
+    },
+    {
+      "fecha": "2024-04-10 00:00:00",
+      "importe": 8165,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-04-12 00:00:00",
+      "importe": 22150,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-04-18 00:00:00",
+      "importe": 50608,
+      "cantidad": 20
+    },
+    {
+      "fecha": "2024-04-20 00:00:00",
+      "importe": 11508,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-04-21 00:00:00",
+      "importe": 7855,
+      "cantidad": 5
+    },
+    {
+      "fecha": "2024-04-26 00:00:00",
+      "importe": 12962,
+      "cantidad": 7
+    },
+    {
+      "fecha": "2024-04-28 00:00:00",
+      "importe": 16205,
+      "cantidad": 8
+    },
+    {
+      "fecha": "2024-04-29 00:00:00",
+      "importe": 34150,
+      "cantidad": 13
+    },
+    {
+      "fecha": "2024-04-30 00:00:00",
+      "importe": 56663,
+      "cantidad": 23
+    },
+    {
+      "fecha": "2024-05-01 00:00:00",
+      "importe": 16499,
+      "cantidad": 7
+    },
+    {
+      "fecha": "2024-05-04 00:00:00",
+      "importe": 16945,
+      "cantidad": 8
+    },
+    {
+      "fecha": "2024-05-05 00:00:00",
+      "importe": 62364,
+      "cantidad": 22
+    },
+    {
+      "fecha": "2024-05-06 00:00:00",
+      "importe": 13011,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-05-08 00:00:00",
+      "importe": 15784,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-05-10 00:00:00",
+      "importe": 36524,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-05-13 00:00:00",
+      "importe": 5958,
+      "cantidad": 2
+    },
+    {
+      "fecha": "2024-05-15 00:00:00",
+      "importe": 23207,
+      "cantidad": 11
+    },
+    {
+      "fecha": "2024-05-16 00:00:00",
+      "importe": 31234,
+      "cantidad": 13
+    },
+    {
+      "fecha": "2024-05-17 00:00:00",
+      "importe": 10332,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-05-19 00:00:00",
+      "importe": 35856,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-05-20 00:00:00",
+      "importe": 35607,
+      "cantidad": 11
+    },
+    {
+      "fecha": "2024-05-21 00:00:00",
+      "importe": 38570,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-05-22 00:00:00",
+      "importe": 26979,
+      "cantidad": 12
+    },
+    {
+      "fecha": "2024-05-23 00:00:00",
+      "importe": 44721,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-05-26 00:00:00",
+      "importe": 13327,
+      "cantidad": 12
+    },
+    {
+      "fecha": "2024-05-28 00:00:00",
+      "importe": 60821,
+      "cantidad": 21
+    },
+    {
+      "fecha": "2024-05-29 00:00:00",
+      "importe": 50855,
+      "cantidad": 16
+    },
+    {
+      "fecha": "2024-05-30 00:00:00",
+      "importe": 23238,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-06-01 00:00:00",
+      "importe": 21387,
+      "cantidad": 6
+    },
+    {
+      "fecha": "2024-06-02 00:00:00",
+      "importe": 76427,
+      "cantidad": 28
+    },
+    {
+      "fecha": "2024-06-04 00:00:00",
+      "importe": 24434,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-06-06 00:00:00",
+      "importe": 10104,
+      "cantidad": 4
+    },
+    {
+      "fecha": "2024-06-08 00:00:00",
+      "importe": 50461,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-06-11 00:00:00",
+      "importe": 74312,
+      "cantidad": 29
+    },
+    {
+      "fecha": "2024-06-14 00:00:00",
+      "importe": 32675,
+      "cantidad": 12
+    },
+    {
+      "fecha": "2024-06-16 00:00:00",
+      "importe": 26718,
+      "cantidad": 9
+    },
+    {
+      "fecha": "2024-06-17 00:00:00",
+      "importe": 24634,
+      "cantidad": 10
+    },
+    {
+      "fecha": "2024-06-19 00:00:00",
+      "importe": 74961,
+      "cantidad": 21
+    },
+    {
+      "fecha": "2024-06-21 00:00:00",
+      "importe": 41537,
+      "cantidad": 14
+    },
+    {
+      "fecha": "2024-06-25 00:00:00",
+      "importe": 11832,
+      "cantidad": 6
+    },
+    {
+      "fecha": "2024-06-27 00:00:00",
+      "importe": 9588,
+      "cantidad": 3
+    },
+    {
+      "fecha": "2024-06-28 00:00:00",
+      "importe": 33847,
+      "cantidad": 18
+    }
+  ],
+  "top_productos": [
+    {
+      "nombre_producto": "Desodorante Aerosol",
+      "importe": 93800,
+      "cantidad": 20
+    },
+    {
+      "nombre_producto": "Queso Rallado 150g",
+      "importe": 89544,
+      "cantidad": 26
+    },
+    {
+      "nombre_producto": "Pizza Congelada Muzzarella",
+      "importe": 85720,
+      "cantidad": 20
+    },
+    {
+      "nombre_producto": "Ron 700ml",
+      "importe": 81396,
+      "cantidad": 21
+    },
+    {
+      "nombre_producto": "Yerba Mate Suave 1kg",
+      "importe": 77560,
+      "cantidad": 20
+    },
+    {
+      "nombre_producto": "Energética Nitro 500ml",
+      "importe": 71706,
+      "cantidad": 17
+    },
+    {
+      "nombre_producto": "Chicle Menta",
+      "importe": 68628,
+      "cantidad": 19
+    },
+    {
+      "nombre_producto": "Caramelos Masticables",
+      "importe": 66528,
+      "cantidad": 14
+    },
+    {
+      "nombre_producto": "Vino Blanco 750ml",
+      "importe": 59048,
+      "cantidad": 22
+    },
+    {
+      "nombre_producto": "Hamburguesas Congeladas x4",
+      "importe": 58080,
+      "cantidad": 24
+    }
+  ],
+  "top_clientes": [
+    {
+      "nombre_cliente_final": "Agustina Flores",
+      "importe": 132158,
+      "cantidad": 50
+    },
+    {
+      "nombre_cliente_final": "Bruno Castro",
+      "importe": 118790,
+      "cantidad": 38
+    },
+    {
+      "nombre_cliente_final": "Bruno Diaz",
+      "importe": 90701,
+      "cantidad": 31
+    },
+    {
+      "nombre_cliente_final": "Diego Diaz",
+      "importe": 90522,
+      "cantidad": 29
+    },
+    {
+      "nombre_cliente_final": "Karina Castro",
+      "importe": 81830,
+      "cantidad": 30
+    },
+    {
+      "nombre_cliente_final": "Mariana Lopez",
+      "importe": 72448,
+      "cantidad": 26
+    },
+    {
+      "nombre_cliente_final": "Olivia Gomez",
+      "importe": 71321,
+      "cantidad": 32
+    },
+    {
+      "nombre_cliente_final": "Guadalupe Martinez",
+      "importe": 67959,
+      "cantidad": 19
+    },
+    {
+      "nombre_cliente_final": "Pablo Sanchez",
+      "importe": 67575,
+      "cantidad": 25
+    },
+    {
+      "nombre_cliente_final": "Camila Rodriguez",
+      "importe": 65001,
+      "cantidad": 24
+    }
+  ],
+  "ventas_mes": {
+    "5": 561832,
+    "1": 529840,
+    "6": 512917,
+    "2": 407041,
+    "3": 388263,
+    "4": 251524
+  },
+  "ventas_dia_semana": {
+    "Tuesday": 619336,
+    "Friday": 423954,
+    "Sunday": 393651,
+    "Wednesday": 369597,
+    "Thursday": 289476,
+    "Monday": 283989,
+    "Saturday": 271414
+  }
+}
