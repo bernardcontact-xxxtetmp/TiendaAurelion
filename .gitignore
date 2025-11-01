@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+.env.local
+venv/
+venv*/
+.venv/
+.venv*/
+
+# Virtualenv
+.Python
+
+# Byte-compiled / caches
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Local data / outputs
+*.csv
+*.xlsx
+*.png
+estadisticas.json
+analisis_multiple.json
+reporte_completo.xlsx

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, ci/add-smoke-test]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          else
+            # minimal set for tests if requirements.txt is absent
+            python -m pip install pandas numpy matplotlib seaborn openpyxl
+          fi
+          # install dev tools for CI checks
+          python -m pip install black flake8 pytest
+
+      - name: Run formatter check (black)
+        run: |
+          black --version
+          black --check .
+
+      - name: Run linter (flake8)
+        run: |
+          flake8 .
+
+      - name: Run tests (pytest)
+        run: |
+          pytest -q
